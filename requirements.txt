@@ -1,0 +1,7 @@
+pytest
+requests
+pydantic
+python-dotenv
+responses
+jsonschema
+pytest-html
