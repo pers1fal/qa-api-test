@@ -1,16 +1,19 @@
-import requests
+def test_get_user_by_id(api_client):
+    response = api_client.get("/users/1")
 
-
-def test_get_single_user():
-    response = requests.get("https://jsonplaceholder.typicode.com/users/1")
-
-    # перевіряємо статус код
     assert response.status_code == 200
 
-    # перетворюємо response у JSON
     data = response.json()
+    assert isinstance(data, dict)
 
-    # перевіряємо, що це саме користувач
     assert data["id"] == 1
+    assert "name" in data
     assert "username" in data
     assert "email" in data
+
+    assert "address" in data
+    assert "company" in data
+
+    assert isinstance(data["id"], int)
+    assert isinstance(data["name"], str)
+    assert isinstance(data["email"], str)
