@@ -1,7 +1,8 @@
 import pytest
 from models.user import User
 
-
+@pytest.mark.smoke
+@pytest.mark.positive
 @pytest.mark.parametrize("user_id", [1, 2, 3])
 def test_get_user_by_id(api_client, user_id):
     response = api_client.get(f"/users/{user_id}")

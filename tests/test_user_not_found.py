@@ -1,3 +1,6 @@
+import pytest
+
+@pytest.mark.negative
 def test_get_user_not_found(api_client):
     response = api_client.get("/users/9999")
 

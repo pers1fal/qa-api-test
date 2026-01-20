@@ -1,3 +1,6 @@
+import pytest
+
+@pytest.mark.regression
 def test_create_post(api_client):
     playload = {
         "title": "My first post",
