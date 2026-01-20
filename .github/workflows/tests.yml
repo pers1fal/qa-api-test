@@ -2,9 +2,15 @@ name: API Tests
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
+  workflow_dispatch:
+    inputs:
+      markers:
+        description: "Which tests to run (smoke, regression, positive, negative, all)"
+        required: true
+        default: "smoke"
 
 jobs:
   tests:
@@ -24,10 +30,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run smoke tests
+      - name: Run pytest
         run: |
-          pytest -m smoke
-
-      - name: Run regression tests
-        run: |
-          pytest -m regression
+          if [ "${{ github.event.inputs.markers }}" = "all" ]; then
+            pytest -v
+          else
+            pytest -v -m "${{ github.event.inputs.markers }}"
+          fi
