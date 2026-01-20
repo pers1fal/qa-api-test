@@ -1,6 +1,8 @@
-def test_get_post_by_id(api_client):
-    post_id = 1
+import pytest
 
+
+@pytest.mark.parametrize("post_id",[1,2,3,10])
+def test_get_post_by_id(api_client, post_id):
     response = api_client.get(f"/posts/{post_id}")
     
     assert response.status_code == 200
