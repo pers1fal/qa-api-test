@@ -2,7 +2,7 @@ def test_create_post(api_client):
     playload = {
         "title": "My first post",
         "body": "Hello from API tests",
-        "userID": 1
+        "userId": 1
     }
     
     response = api_client.post("/posts", json=playload)
@@ -14,7 +14,7 @@ def test_create_post(api_client):
     
     assert data["title"] == playload["title"]
     assert data["body"] == playload["body"]
-    assert data["userID"] == playload["userID"]
+    assert data["userId"] == playload["userId"]
     
     assert "id" in data
     assert isinstance(data["id"], int)  
