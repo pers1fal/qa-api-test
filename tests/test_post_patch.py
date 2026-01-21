@@ -1,4 +1,7 @@
 import pytest
+from api.posts import PostsAPI
+from models.post import Post
+
 
 @pytest.mark.regression
 @pytest.mark.positive
@@ -9,16 +12,18 @@ def test_patch_post_title(api_client):
         "title": "Patched title"
     }
 
-    response = api_client.patch(f"/posts/{post_id}", json=payload)
+    # ACT
+    response = api_client.patch(
+        PostsAPI.by_id(post_id),
+        json=payload
+    )
 
+    # ASSERT: status code
     assert response.status_code == 200
 
-    data = response.json()
+    # ASSERT: schema
+    post = Post(**response.json())
 
-    # перевіряємо, що змінилось тільки поле title
-    assert data["title"] == payload["title"]
-
-    # інші поля існують
-    assert "body" in data
-    assert "userId" in data
-    assert "id" in data
+    # ASSERT: business logic
+    assert post.title == payload["title"]
+    assert post.id == post_id

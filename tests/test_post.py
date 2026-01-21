@@ -1,23 +1,26 @@
 import pytest
+from api.posts import PostsAPI
 
 @pytest.mark.regression
 def test_create_post(api_client):
-    playload = {
+    payload = {
         "title": "My first post",
         "body": "Hello from API tests",
         "userId": 1
     }
-    
-    response = api_client.post("/posts", json=playload)
-    
+
+    response = api_client.post(
+        PostsAPI.collection(),
+        json=payload
+    )
+
     assert response.status_code == 201
-    
+
     data = response.json()
-    
-    
-    assert data["title"] == playload["title"]
-    assert data["body"] == playload["body"]
-    assert data["userId"] == playload["userId"]
-    
+
+    assert data["title"] == payload["title"]
+    assert data["body"] == payload["body"]
+    assert data["userId"] == payload["userId"]
+
     assert "id" in data
-    assert isinstance(data["id"], int)  
+    assert isinstance(data["id"], int)

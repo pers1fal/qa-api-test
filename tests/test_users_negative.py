@@ -1,4 +1,5 @@
 import pytest
+from api.users import UsersAPI
 
 @pytest.mark.negative
 @pytest.mark.parametrize(
@@ -11,10 +12,10 @@ def test_get_user_with_invalid_id(api_client, user_id):
     Verify that API returns 404 for invalid user IDs
     """
 
-    response = api_client.get(f"/users/{user_id}")
+    response = api_client.get(
+        UsersAPI.by_id(user_id)
+    )
 
     assert response.status_code == 404
+    assert response.json() == {}
 
-    data = response.json()
-
-    assert data == {}

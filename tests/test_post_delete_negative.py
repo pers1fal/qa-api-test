@@ -1,5 +1,5 @@
 import pytest
-
+from api.posts import PostsAPI
 
 @pytest.mark.regression
 @pytest.mark.positive
@@ -10,7 +10,7 @@ def test_delete_post_by_id(api_client):
 
     post_id = 1
 
-    response = api_client.delete(f"/posts/{post_id}")
+    response = api_client.delete(PostsAPI.by_id(post_id))
 
     assert response.status_code == 200
 

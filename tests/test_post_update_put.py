@@ -1,13 +1,11 @@
 import pytest
+from api.posts import PostsAPI
+from models.post import Post
 
 
 @pytest.mark.regression
 @pytest.mark.positive
 def test_update_post_with_put(api_client):
-    """
-    Verify that a post can be fully updated using PUT
-    """
-
     post_id = 1
 
     payload = {
@@ -18,15 +16,17 @@ def test_update_post_with_put(api_client):
     }
 
     # ACT
-    response = api_client.put(f"/posts/{post_id}", json=payload)
+    response = api_client.put(
+        PostsAPI.by_id(post_id),
+        json=payload
+    )
 
-    # ASSERT: status code
+    # ASSERT
     assert response.status_code == 200
 
-    data = response.json()
+    post = Post(**response.json())
 
-    # ASSERT: response body
-    assert data["id"] == post_id
-    assert data["title"] == payload["title"]
-    assert data["body"] == payload["body"]
-    assert data["userId"] == payload["userId"]
+    assert post.id == post_id
+    assert post.title == payload["title"]
+    assert post.body == payload["body"]
+    assert post.userId == payload["userId"]
