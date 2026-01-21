@@ -12,7 +12,6 @@ The goal of the project is to demonstrate:
 * positive and negative test scenarios
 * realistic handling of non-standard API behavior
 
-**Project level**: Junior+ / Early Middle AQA
 
 ---
 
