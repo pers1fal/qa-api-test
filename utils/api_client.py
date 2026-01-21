@@ -1,3 +1,4 @@
+import json
 import requests
 from config.settings import BASE_URL, TIMEOUT
 
@@ -16,7 +17,22 @@ class APIClient:
             f"{self.base_url}{endpoint}",
             json=json
             )
+        
     def delete(self, endpoint: str, headers=None):
         url = f"{self.base_url}{endpoint}"
         return requests.delete(url,headers=headers,timeout=TIMEOUT)
+    
+    def put(self, endpoint: str, json=None, headers=None):
+        url = f"{self.base_url}{endpoint}"
+        return requests.put(url,json=json,headers=headers,timeout=TIMEOUT)
+    
+    def patch(self, endpoint, json=None):
+         return requests.patch(
+            f"{self.base_url}{endpoint}",
+            json=json,
+            timeout=TIMEOUT
+        )
+    
+    
+    
     
