@@ -16,3 +16,7 @@ class APIClient:
             f"{self.base_url}{endpoint}",
             json=json
             )
+    def delete(self, endpoint: str, headers=None):
+        url = f"{self.base_url}{endpoint}"
+        return requests.delete(url,headers=headers,timeout=TIMEOUT)
+    
